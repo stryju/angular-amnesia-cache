@@ -1,0 +1,27 @@
+{
+  "name": "angular-amnesia-cache",
+  "private": true,
+  "main": "dist/amnesia-cache.js",
+  "version": "1.0.0",
+  "homepage": "https://github.com/stryju/angular-amnesia-cache",
+  "authors": [
+    {
+      "name" : "Tomasz Stryjewski",
+      "url" : "http://stryju.pl"
+    }
+  ],
+  "description": "short-term cache for angular",
+  "keywords": [
+    "angular",
+    "cache",
+    "amnesia"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "gulpfile.js"
+  ]
+}

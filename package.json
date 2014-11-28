@@ -1,0 +1,36 @@
+{
+  "name": "angular-amnesia-cache",
+  "private": true,
+  "version": "1.0.0",
+  "description": "short-term cache for angular",
+  "main": "index.js",
+  "devDependencies": {
+    "gulp": "^3.8.10",
+    "gulp-header": "^1.2.2",
+    "gulp-jshint": "^1.9.0",
+    "gulp-uglify": "^1.0.1"
+  },
+  "scripts": {
+    "main": "gulp",
+    "build" : "gulp build",
+    "test": "gulp test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stryju/angular-amnesia-cache.git"
+  },
+  "keywords": [
+    "angular",
+    "cache",
+    "amnesia"
+  ],
+  "author": {
+    "name" : "Tomasz Stryjewski",
+    "url" : "http://stryju.pl"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/stryju/angular-amnesia-cache/issues"
+  },
+  "homepage": "https://github.com/stryju/angular-amnesia-cache"
+}
