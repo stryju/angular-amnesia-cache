@@ -1,3 +1,7 @@
+// jshint node:true
+
+'use strict';
+
 var path   = require( 'path' );
 var gulp   = require( 'gulp' );
 var jshint = require( 'gulp-jshint' );
@@ -15,7 +19,8 @@ dest = dest.join( path.sep );
 
 gulp.task( 'test', function () {
   return gulp.src( src )
-    .pipe( jshint() );
+    .pipe( jshint() )
+    .pipe( jshint.reporter( 'jshint-stylish' ) );
 });
 
 gulp.task( 'build', [ 'test' ], function () {

@@ -5,9 +5,11 @@
  * a simple, yet useful cache provider for angular
  */
 
-/* global angular:false */
+/* global angular:false, define:false, module:false */
 
 (function ( factory ) {
+  'use strict';
+
   if ( typeof define === 'function' && define.amd ) {
     return define( factory );
   }
@@ -24,51 +26,84 @@
     // jshint validthis:true
     // jshint latedef:false
 
-    var lifespan = 5000;
-    var cache;
+    var _lifespan = 5000;
+    var _cache;
+    var i = 0;
 
     this.setLifespan = setLifespan;
     this.$get        = $get;
 
     function setLifespan( value ) {
-      value = parseInt( value, 10 );
+      var lifespan = validateLifespan( value );
 
-      if ( isNaN( value ) ) {
-        return lifespan;
+      if ( ! lifespan ) {
+        return false;
       }
 
-      lifespan = Math.max( 0, value );
+      _lifespan = lifespan;
+
+      return _lifespan;
     }
 
     function $get( $cacheFactory, $timeout ) {
       // jshint validthis:true
       // jshint latedef:false
 
-      if ( cache ) {
-        return cache;
+      if ( _cache ) {
+        return _cache;
       }
 
-      cache = $cacheFactory( 'αμνε$ια' );
+      _cache = generateCache();
 
-      var oldGet   = cache.get;
-      var timeouts = {};
+      return _cache;
 
-      cache.get = function ( id ) {
-        if ( timeouts[ id ] ) {
-          $timeout.cancel( timeouts[ id ] );
+      function generateCache( lifespan, affectGlobal ) {
+        var cache = $cacheFactory( 'αμνε$ια' + ( i++ || '' ) );
+
+        var oldGet   = cache.get;
+        var timeouts = {};
+
+        cache.get    = get;
+        cache.custom = generateCache;
+
+        lifespan  = validateLifespan( lifespan );
+
+        return cache;
+
+        function get( id ) {
+          if ( timeouts[ id ] ) {
+            $timeout.cancel( timeouts[ id ] );
+          }
+
+          var clear = function () {
+            cache.remove( id );
+            delete timeouts[ id ];
+
+            if ( affectGlobal ) {
+              global( cache ).remove( id );
+            }
+          };
+
+          timeouts[ id ] = $timeout( clear, lifespan || _lifespan, false );
+
+          if ( affectGlobal ) {
+            return global( cache ).get( id ) || oldGet.call( cache, id );
+          }
+
+          return oldGet.call( cache, id );
+        }
+      }
+
+      function global( cache ) {
+        if ( cache === _cache ) {
+          return {
+            get    : angular.noop,
+            remove : angular.noop
+          };
         }
 
-        var clear = function () {
-          cache.remove( id );
-          delete timeouts[ id ];
-        };
-
-        timeouts[ id ] = $timeout( clear, lifespan, false );
-
-        return oldGet.call( cache, id );
-      };
-
-      return cache;
+        return _cache;
+      }
     }
 
     $get.$inject = [
@@ -76,8 +111,18 @@
     ];
   }
 
+  function validateLifespan( value ) {
+    value = parseInt( value, 10 );
+
+    if ( isNaN( value ) ) {
+      return false;
+    }
+
+    return Math.max( 1, value );
+  }
+
   var ngModule = angular.module( 'str.amnesia-cache', [] )
-    .provider( 'AmnesiaCache', amnesiaCacheProvider );
+    .provider( 'amnesiaCache', amnesiaCacheProvider );
 
   return ngModule;
 }));
