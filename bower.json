@@ -1,6 +1,5 @@
 {
   "name": "angular-amnesia-cache",
-  "private": true,
   "main": "dist/amnesia-cache.js",
   "version": "1.0.0",
   "homepage": "https://github.com/stryju/angular-amnesia-cache",

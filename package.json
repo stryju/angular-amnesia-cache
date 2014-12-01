@@ -1,6 +1,5 @@
 {
   "name": "angular-amnesia-cache",
-  "private": true,
   "version": "1.0.0",
   "description": "short-term cache for angular",
   "main": "index.js",
