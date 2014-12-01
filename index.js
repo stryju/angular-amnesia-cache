@@ -27,13 +27,12 @@
     // jshint latedef:false
 
     var _lifespan = 5000;
-    var _cache;
-    var i = 0;
+    var _i = 0;
 
-    this.setLifespan = setLifespan;
-    this.$get        = $get;
+    this.defaultLifespan = defaultLifespan;
+    this.$get            = $get;
 
-    function setLifespan( value ) {
+    function defaultLifespan( value ) {
       var lifespan = validateLifespan( value );
 
       if ( ! lifespan ) {
@@ -49,60 +48,84 @@
       // jshint validthis:true
       // jshint latedef:false
 
-      if ( _cache ) {
-        return _cache;
-      }
+      var cache;
 
-      _cache = generateCache();
+      return Amnesia;
 
-      return _cache;
+      function Amnesia( lifespan ) {
+        if ( ! ( this instanceof Amnesia ) ) {
+          return cache || new Amnesia( lifespan );
+        }
 
-      function generateCache( lifespan, affectGlobal ) {
-        var cache = $cacheFactory( 'αμνε$ια' + ( i++ || '' ) );
+        cache = $cacheFactory( 'αμνε$ια' + ( _i++ || '' ) );
 
-        var oldGet   = cache.get;
-        var timeouts = {};
+        var _get       = cache.get;
+        var _put       = cache.put;
+        var _remove    = cache.remove;
+        var _removeAll = cache.removeAll;
+        var _destroy   = cache.destroy;
+        var timeouts   = {};
 
-        cache.get    = get;
-        cache.custom = generateCache;
+        cache.get       = get;
+        cache.put       = put;
+        cache.remove    = remove;
+        cache.removeAll = removeAll;
+        cache.destroy   = destroy;
 
-        lifespan  = validateLifespan( lifespan );
+        cache.amnesia = {
+          lifespan : validateLifespan( lifespan ) || _lifespan
+        };
 
         return cache;
 
-        function get( id ) {
+        /////
+
+        function ticktock( id ) {
           if ( timeouts[ id ] ) {
             $timeout.cancel( timeouts[ id ] );
           }
 
-          var clear = function () {
+          timeouts[ id ] = $timeout( function () {
             cache.remove( id );
             delete timeouts[ id ];
+          }, cache.amnesia.lifespan, false );
+        }
 
-            if ( affectGlobal ) {
-              global( cache ).remove( id );
-            }
-          };
+        function get( id ) {
+          ticktock( id );
 
-          timeouts[ id ] = $timeout( clear, lifespan || _lifespan, false );
+          return _get.call( cache, id );
+        }
 
-          if ( affectGlobal ) {
-            return global( cache ).get( id ) || oldGet.call( cache, id );
+        function put( id, value ) {
+          ticktock( id );
+
+          return _put.call( cache, id, value );
+        }
+
+        function remove( id ) {
+          if ( timeouts[ id ] ) {
+            $timeout.cancel( timeouts[ id ] );
+            delete timeouts[ id ];
           }
 
-          return oldGet.call( cache, id );
-        }
-      }
-
-      function global( cache ) {
-        if ( cache === _cache ) {
-          return {
-            get    : angular.noop,
-            remove : angular.noop
-          };
+          return _remove.call( cache, id );
         }
 
-        return _cache;
+        function removeAll() {
+          angular.forEach( timeouts, function ( timeout, id ) {
+            $timeout.cancel( timeout );
+            delete timeouts[ id ];
+          });
+
+          return _removeAll.call( cache );
+        }
+
+        function destroy() {
+          removeAll();
+
+          return _destroy.call( cache );
+        }
       }
     }
 
@@ -126,5 +149,3 @@
 
   return ngModule;
 }));
-
-

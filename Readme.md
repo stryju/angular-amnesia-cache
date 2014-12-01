@@ -19,17 +19,36 @@ Any entity that will have at least `2s` of pause in between, `AmnesiaCache` will
 ### `AmnesiaCacheProvider`
 Provider for `AmnesiaCache`.
 
-- `setLifespan( lifespan:int )`
-    Sets the global lifespan (in `ms`) for cache.
+- `defaultLifespan( lifespan:int )` - sets the default global lifespan (in `ms`) for cache.
 
 ---
 
 ### `AmnesiaCache`
 Cache generated with `$cacheFactory` (with `get( id )` proxied through timeout) , but capable of generating a custom amnesia cache with `#custom( lifespan, affectGlobal )`.
 
-- `custom( lifespan:int, affectGlobal:bool )`
-    Generates a new `AmnesiaCache` instance with given lifespan (useful for those requests with the same generated ID; to learn how this works, please refer to [official angular docs on $http caching](https://docs.angularjs.org/api/ng/service/$http#caching).
-    If `affectGlobal` flag is set to true, this `custom` cache with affect the "main `AmnesiaCache` instance" (`main`) - this means that:
-    - `custom` will clear the cached instance from `main` cache
-    - `custom.get( id )` will check the `main.get( id )` first, then try to check the `custom` (in that order) - if it will get the entity from `main` cache, no entity will be added to `custom` cache.
+- `[new] AmnesiaCache( [timespan:int] )` - constructor. Will return the same cache entity, if **not** initialized with `new` operator (and create a new instance, if needed). If no `timespan` provided, it will use the default one.
 
+---
+
+## Sample integration
+
+```js
+
+// global
+angular.module( 'fooModule', [ 'str.amnesia-cache' ] )
+  .config( function ( $httpProvider, AmnesiaCacheProvider ) {
+    AmnesiaCacheProvider.defaultLifespan( 10000 );
+    $httpProvider.defaults.cache = 'AmnesiaCache'
+  });
+
+// custom
+
+angular.module( 'fooModule' )
+  .service( function ( $http, AmnesiaCache ) {
+    this.get = function( url ) {
+      return $http.get( url, {
+        cache : new AmnesiaCache( 1000 )
+      });
+    };
+  });
+```

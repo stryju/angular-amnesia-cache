@@ -6,8 +6,8 @@
   "homepage": "https://github.com/stryju/angular-amnesia-cache",
   "authors": [
     {
-      "name" : "Tomasz Stryjewski",
-      "url" : "http://stryju.pl"
+      "name": "Tomasz Stryjewski",
+      "url": "http://stryju.pl"
     }
   ],
   "description": "short-term cache for angular",
@@ -20,8 +20,15 @@
   "ignore": [
     "node_modules",
     "bower_components",
-    "test",
-    "tests",
-    "gulpfile.js"
-  ]
+    "gulpfile.js",
+    "karma.conf.js",
+    "index.spec.js"
+  ],
+  "devDependencies": {
+    "angular": "~1.2.27",
+    "angular-mocks": "~1.2.27"
+  },
+  "resolutions": {
+    "angular": "~1.2.27"
+  }
 }

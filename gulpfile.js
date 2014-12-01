@@ -15,15 +15,33 @@ var src  = pkg.main;
 var dest = bwr.main.split( /(\/|\\)+/ );
 var min  = dest.pop();
 
+var karmaConfig = __dirname + '/karma.conf.js';
+
 dest = dest.join( path.sep );
 
-gulp.task( 'test', function () {
+gulp.task( 'lint', function () {
   return gulp.src( src )
     .pipe( jshint() )
     .pipe( jshint.reporter( 'jshint-stylish' ) );
 });
 
-gulp.task( 'build', [ 'test' ], function () {
+gulp.task( 'test', [ 'lint' ], function ( done ) {
+  require( 'karma' ).server
+    .start({
+      configFile : karmaConfig,
+      singleRun  : true
+    }, done );
+});
+
+
+gulp.task( 'tdd', [ 'lint' ], function ( done ) {
+  require( 'karma' ).server
+    .start({
+      configFile : karmaConfig
+    }, done );
+});
+
+gulp.task( 'build', [ 'lint', 'test' ], function () {
   return gulp.src( src )
     .pipe( uglify() )
     .pipe( rename( min ) )
