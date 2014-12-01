@@ -22,6 +22,8 @@ Provider for `AmnesiaCache`.
 #### `setLifespan( lifespan:int )`
 Sets the global lifespan (in `ms`) for cache.
 
+---
+
 ### `AmnesiaCache`
 Cache generated with `$cacheFactory` (with `get( id )` proxied through timeout) , but capable of generating a custom amnesia cache with `#custom( lifespan, affectGlobal )`.
 
