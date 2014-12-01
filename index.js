@@ -77,7 +77,7 @@
   }
 
   var ngModule = angular.module( 'str.amnesia-cache', [] )
-    .provider( 'amnesiaCache', amnesiaCacheProvider );
+    .provider( 'AmnesiaCache', amnesiaCacheProvider );
 
   return ngModule;
 }));
