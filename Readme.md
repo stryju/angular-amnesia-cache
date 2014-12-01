@@ -19,17 +19,17 @@ Any entity that will have at least `2s` of pause in between, `AmnesiaCache` will
 ### `AmnesiaCacheProvider`
 Provider for `AmnesiaCache`.
 
-#### `setLifespan( lifespan:int )`
-Sets the global lifespan (in `ms`) for cache.
+- `setLifespan( lifespan:int )`
+    Sets the global lifespan (in `ms`) for cache.
 
 ---
 
 ### `AmnesiaCache`
 Cache generated with `$cacheFactory` (with `get( id )` proxied through timeout) , but capable of generating a custom amnesia cache with `#custom( lifespan, affectGlobal )`.
 
-### `custom( lifespan:int, affectGlobal:bool )`
-Generates a new `AmnesiaCache` instance with given lifespan (useful for those requests with the same generated ID; to learn how this works, please refer to [official angular docs on $http caching](https://docs.angularjs.org/api/ng/service/$http#caching).
-If `affectGlobal` flag is set to true, this `custom` cache with affect the "main `AmnesiaCache` instance" (`main`) - this means that:
-- `custom` will clear the cached instance from `main` cache
-- `custom.get( id )` will check the `main.get( id )` first, then try to check the `custom` (in that order) - if it will get the entity from `main` cache, no entity will be added to `custom` cache.
+- `custom( lifespan:int, affectGlobal:bool )`
+    Generates a new `AmnesiaCache` instance with given lifespan (useful for those requests with the same generated ID; to learn how this works, please refer to [official angular docs on $http caching](https://docs.angularjs.org/api/ng/service/$http#caching).
+    If `affectGlobal` flag is set to true, this `custom` cache with affect the "main `AmnesiaCache` instance" (`main`) - this means that:
+    - `custom` will clear the cached instance from `main` cache
+    - `custom.get( id )` will check the `main.get( id )` first, then try to check the `custom` (in that order) - if it will get the entity from `main` cache, no entity will be added to `custom` cache.
 
