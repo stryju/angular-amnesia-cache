@@ -1,4 +1,6 @@
 # Amnesia Cache
+[![build status](http://img.shields.io/travis/stryju/angular-amnesia-cache.svg?style=flat-square)](https://travis-ci.org/stryju/angular-amnesia-cache)
+
 Short-term cache for angular.js
 
 Really* convenient cache for $http requests that get querried in succession (shared remote config for some components). It will return the same entity as long as it's not querried for the same entity for given time. **It might be a better idea to write a service for those, if you need some more custom handling / behavior.** `AmnesiaCache` is just convenient.
