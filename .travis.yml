@@ -5,13 +5,3 @@ node_js:
 branches:
   only:
     - master
-
-install:
-  - npm install
-  - bower install
-
-# after_script:
-#   - npm run coveralls
-
-# notifications:
-#   webhooks: http://travalizit.org/builds

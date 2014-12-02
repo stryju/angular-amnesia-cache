@@ -17,6 +17,7 @@
     "karma-phantomjs-launcher": "^0.1.4"
   },
   "scripts": {
+    "postinstall": "bower install",
     "main": "gulp",
     "build": "gulp build",
     "test": "gulp test"
