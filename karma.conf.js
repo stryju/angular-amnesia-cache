@@ -30,8 +30,16 @@ module.exports = function ( config ) {
     },
 
     coverageReporter : {
-      type : 'text-summary',
-      dir  : 'coverage/'
+      reporters : [
+        {
+          type   : 'lcovonly',
+          dir    : 'coverage',
+          subdir : '.'
+        },
+        {
+          type : 'text-summary'
+        }
+      ]
     },
 
     // test results reporter to use

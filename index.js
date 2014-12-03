@@ -10,10 +10,12 @@
 (function ( factory ) {
   'use strict';
 
+  /* istanbul ignore next */
   if ( typeof define === 'function' && define.amd ) {
     return define( factory );
   }
 
+  /* istanbul ignore if */
   if ( typeof exports === 'object' ) {
     return ( module.exports = factory() );
   }

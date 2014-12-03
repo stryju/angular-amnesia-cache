@@ -2,11 +2,13 @@
 
 'use strict';
 
-var path   = require( 'path' );
-var gulp   = require( 'gulp' );
-var jshint = require( 'gulp-jshint' );
-var uglify = require( 'gulp-uglify' );
-var rename = require( 'gulp-rename' );
+var path = require( 'path' );
+
+var gulp      = require( 'gulp' );
+var jshint    = require( 'gulp-jshint' );
+var uglify    = require( 'gulp-uglify' );
+var rename    = require( 'gulp-rename' );
+var coveralls = require( 'gulp-coveralls' );
 
 var pkg = require( './package.json' );
 var bwr = require( './bower.json' );
@@ -33,6 +35,10 @@ gulp.task( 'test', [ 'lint' ], function ( done ) {
     }, done );
 });
 
+gulp.task( 'coveralls', [ 'test' ], function () {
+  return gulp.src( 'coverage/**/lcov.info' )
+    .pipe( coveralls() );
+});
 
 gulp.task( 'tdd', [ 'lint' ], function ( done ) {
   require( 'karma' ).server

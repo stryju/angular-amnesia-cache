@@ -121,6 +121,8 @@ describe( 'amnesia-cache module', function () {
     });
 
     it( 'should clean up timeouts @ remove( id )', function () {
+      cache.remove( 'baz' );
+
       cache.put( 'baz', 'quux' );
       expect( $timeout.verifyNoPendingTasks ).toThrow();
 
@@ -130,6 +132,7 @@ describe( 'amnesia-cache module', function () {
     it( 'should clean up timeouts @ removeAll()', function () {
       cache.put( 'foo', 'qwe' );
       $timeout.flush();
+
       cache.put( 'bar', 'asd' );
       cache.put( 'baz', 'zxc' );
       cache.put( 'quux', '123' );
@@ -141,6 +144,7 @@ describe( 'amnesia-cache module', function () {
     it( 'should clean up timeouts @ destroy()', function () {
       cache.put( 'foo', 'qwe' );
       $timeout.flush();
+
       cache.put( 'bar', 'asd' );
       cache.put( 'baz', 'zxc' );
       cache.put( 'quux', '123' );
