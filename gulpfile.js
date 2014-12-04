@@ -35,16 +35,16 @@ gulp.task( 'test', [ 'lint' ], function ( done ) {
     }, done );
 });
 
-gulp.task( 'coveralls', [ 'test' ], function () {
-  return gulp.src( 'coverage/**/lcov.info' )
-    .pipe( coveralls() );
-});
-
 gulp.task( 'tdd', [ 'lint' ], function ( done ) {
   require( 'karma' ).server
     .start({
       configFile : karmaConfig
     }, done );
+});
+
+gulp.task( 'coveralls', [ 'test' ], function () {
+  return gulp.src( 'coverage/**/lcov.info' )
+    .pipe( coveralls() );
 });
 
 gulp.task( 'build', [ 'lint', 'test' ], function () {

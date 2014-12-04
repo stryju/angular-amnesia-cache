@@ -25,7 +25,8 @@
     "postinstall": "bower install",
     "main": "gulp",
     "build": "gulp build",
-    "test": "gulp coveralls"
+    "test": "gulp test",
+    "coveralls": "gulp coveralls"
   },
   "repository": {
     "type": "git",
