@@ -5,23 +5,23 @@
  * a simple, yet useful cache provider for angular
  */
 
-/* global angular:false, define:false, module:false */
+/* global angular:false, define:false, module:false, require:false */
 
 (function ( factory ) {
   'use strict';
 
   /* istanbul ignore next */
   if ( typeof define === 'function' && define.amd ) {
-    return define( factory );
+    return define( [ 'angular' ], factory );
   }
 
-  /* istanbul ignore if */
+  /* istanbul ignore next */
   if ( typeof exports === 'object' ) {
-    return ( module.exports = factory() );
+    return ( module.exports = factory( require( 'angular' ) ) );
   }
 
-  factory();
-}( function () {
+  factory( window.angular );
+}( function ( angular ) {
   'use strict';
 
   function amnesiaCacheProvider() {

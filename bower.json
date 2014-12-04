@@ -1,7 +1,7 @@
 {
   "name": "angular-amnesia-cache",
   "main": "dist/amnesia-cache.js",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "homepage": "https://github.com/stryju/angular-amnesia-cache",
   "authors": [
     {
