@@ -30,6 +30,24 @@ Cache generated with `$cacheFactory` (with `get( id )` proxied through timeout) 
 
 - `[new] AmnesiaCache( [timespan:int] )` - constructor. Will return the same cache entity, if **not** initialized with `new` operator (and create a new instance, if needed). If no `timespan` provided, it will use the default one.
 
+## AMD (require.js, ...)
+
+This module uses 'angular' as a dependency, so just make sure that you have it's path set up properly.
+
+It's wrapped like so:
+```js
+define( [ 'angular' ], function ( angular ) { ... });
+```
+
+## CommonJS (browserify, ...)
+
+This module uses 'angular' as a dependency, so just make sure that you have it's path set up properly.
+
+It's declaration is equivalent to:
+```
+var angular = require( 'angular' );
+```
+
 ---
 
 ## Sample integration

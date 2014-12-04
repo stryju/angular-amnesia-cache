@@ -1,7 +1,7 @@
 {
   "name": "angular-amnesia-cache",
   "main": "dist/amnesia-cache.js",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "homepage": "https://github.com/stryju/angular-amnesia-cache",
   "authors": [
     {
@@ -23,11 +23,10 @@
     "karma.conf.js",
     "index.spec.js"
   ],
-  "devDependencies": {
-    "angular": "~1.2.27",
-    "angular-mocks": "~1.2.27"
-  },
-  "resolutions": {
+  "dependencies" : {
     "angular": "~1.2.27"
+  },
+  "devDependencies": {
+    "angular-mocks": "~1.2.27"
   }
 }
