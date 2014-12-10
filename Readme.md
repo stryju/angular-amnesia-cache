@@ -56,16 +56,23 @@ var angular = require( 'angular' );
 
 // global
 angular.module( 'fooModule', [ 'str.amnesia-cache' ] )
-  .config( function ( $httpProvider, AmnesiaCacheProvider ) {
-    AmnesiaCacheProvider.defaultLifespan( 10000 );
-    $httpProvider.defaults.cache = 'AmnesiaCache'
-  });
+  .config(function ( AmnesiaCacheProvider ) {
+    AmnesiaCacheProvider.defaultLifespan( 3000 );
+  })
+  .run(function( $http, AmnesiaCache ) {
+    $http.defaults.cache = new AmnesiaCache();
+  })
 
 // custom
 
 angular.module( 'fooModule' )
-  .service( function ( $http, AmnesiaCache ) {
-    this.get = function( url ) {
+  .service('fooService', function ( $http, AmnesiaCache ) {
+    this.getWithDefaultAmnesia = function( url ) {
+      return $http.get( url, {
+        cache : true
+      });
+    };
+    this.getWithCustomAmnesia = function( url ) {
       return $http.get( url, {
         cache : new AmnesiaCache( 1000 )
       });
